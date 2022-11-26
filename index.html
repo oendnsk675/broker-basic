@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="" cols="100" rows="18"></textarea>
+</body>
+
+<script src="./mqttws31.js"></script>
+<script>
+    let host = "192.168.43.51"
+    let port = 8888
+    let client_id = "1213"
+    client = new Messaging.Client(host, port, client_id);
+
+    client.onMessageArrived = onMessageArrived;
+
+    client.connect({ onSuccess: onConnect });
+
+    function onConnect() {
+        console.log("onConnect");
+        client.subscribe("test");
+    }
+
+    function onMessageArrived(message){
+        document.querySelector("textarea").value += message.payloadString+"\n"
+    }
+</script>
+
+</html>
